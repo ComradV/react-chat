@@ -17,24 +17,27 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
+import { chats, messages } from './mock-data';
+
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
   },
   appFrame: {
-    height: `100%`,
-    zIndex: 1,
-    overflow: 'hidden',
     position: 'relative',
     display: 'flex',
     width: '100%',
+    height: '100%',
   },
   appBar: {
     width: `calc(100% - 320px)`,
+    position:'fixed',
   },
   drawerPaper: {
     position: 'relative',
     width: 320,
+    height: `100%`,
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -57,8 +60,8 @@ const styles = theme => ({
   },
 
   contactList: {
-    paddingTop: 70,
-    paddingBottom: 60,
+    overflowY: 'scroll',
+    height: `calc(100%-72-56)`
   },
 
   title: {
@@ -69,9 +72,9 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
-    position: 'fixed',
+    position: 'absolute',
     bottom: `10%`,
-    left: 230,
+    right: 50,
   },
   bottomNavigation: {
     position: 'fixed',
@@ -79,9 +82,9 @@ const styles = theme => ({
     width: 320,
   },
   searchWrapper: {
-    position: 'fixed',
-    zIndex: 10,
-    backgroundColor: 'white',
+    top:0,
+    right:0,
+    width:320,
   },
 });
 
@@ -101,9 +104,6 @@ class MyApp extends React.Component {
 
     return (
       <div className={classes.appFrame}>
-        <form className={classes.container} noValidate autoComplete="off">
-
-        </form>
         <AppBar
           position="absolute"
           className={classes.appBar}
@@ -124,8 +124,9 @@ class MyApp extends React.Component {
           <div className={classes.searchWrapper}>
             <TextField
               id="standard-search"
-              label="Search field"
+              label="Search chats..."
               type="search"
+              fullWidth
               className={classes.textField}
               margin="normal"
             />
