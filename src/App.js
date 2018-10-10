@@ -16,23 +16,19 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import RestoreIcon from '@material-ui/icons/Restore';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Paper from '@material-ui/core/Paper';
+import Input from '@material-ui/core/Input';
+
 
 import { chats, messages } from './mock-data';
 
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
   appFrame: {
-    position: 'relative',
-    display: 'flex',
-    width: '100%',
-    height: '100%',
+
   },
   appBar: {
-    width: `calc(100% - 320px)`,
-    position:'fixed',
+    width: `100%`,
   },
   drawerPaper: {
     position: 'relative',
@@ -41,27 +37,35 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
-
-  container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: '64px',
+    height: '100%',
+    overflow: 'hidden',  
+  },
+  searchWrapper: {
+    width: 320,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
+    
   },
 
   contactList: {
-    overflowY: 'scroll',
-    height: `calc(100%-72-56)`
+    overflowY: 'auto',
+    minHeight: `calc(100% - 72px)`,
+    maxHeight: `calc(100% - 72px)`,
+    width: '100%',
+    paddingBottom: 60,
+  },
+  messagesList: {
+    overflowY: 'auto',
+    paddingBottom: 60,
+    width: '100%',
+    minHeight: `calc(100% - 64px)`,
+    maxHeight: `calc(100% - 64px)`,
   },
 
   title: {
@@ -77,15 +81,24 @@ const styles = theme => ({
     right: 50,
   },
   bottomNavigation: {
-    position: 'fixed',
+    position: 'absolute',
     bottom: 0,
+    width: '100%',
+  },
+  messagePaper: {
+    width: `calc(100% - 40px)`,
+    position: 'absolute',
+    right: 20,
+    bottom: 30
+  },
+  drawer: {
     width: 320,
-  },
-  searchWrapper: {
-    top:0,
-    right:0,
-    width:320,
-  },
+    height: '100%',
+    position: 'relative',
+    display: 'flex',
+    flexFlow: 'column',
+    flexGrow: 1,
+  }
 });
 
 
@@ -104,22 +117,9 @@ class MyApp extends React.Component {
 
     return (
       <div className={classes.appFrame}>
-        <AppBar
-          position="absolute"
-          className={classes.appBar}
-        >
-          <Toolbar>
-            <Typography variant="title" color="inherit" noWrap>
-              DogeCodes React Chat
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
         <Drawer
           variant="permanent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}
+          className={classes.drawer}
         >
           <div className={classes.searchWrapper}>
             <TextField
@@ -131,18 +131,20 @@ class MyApp extends React.Component {
               margin="normal"
             />
           </div>
-
           <List className={classes.contactList}>
-            {generate(
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar className={classes.avatar}>H</Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Contact Name"
-                />
-              </ListItem>,
-            )}
+            {chats.map((el, index) =>
+              (
+                <ListItem key={index}>
+                  <ListItemAvatar>
+                    <Avatar className={classes.avatar}>{el.title&&el.title[0]}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={el.title}
+                  />
+                </ListItem>
+              )
+            )
+            }
           </List>
           <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
             <AddIcon />
@@ -155,23 +157,40 @@ class MyApp extends React.Component {
             <BottomNavigationAction label="My chats" icon={<RestoreIcon />} />
             <BottomNavigationAction label="Explore" icon={<ExploreIcon />} />
           </BottomNavigation>
+    
 
         </Drawer>
+
+
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <AppBar
+            className={classes.appBar}
+          >
+            <Toolbar>
+              <Typography variant="title" color="inherit" noWrap>
+                DogeCodes React Chat
+              </Typography>
+            </Toolbar>
+          </AppBar>
           <List className={classes.messagesList}>
-            {generate(
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar className={classes.avatar}>H</Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  secondary='AvName'
-                  primary="Message"
-                />
-              </ListItem>,
-            )}
+            {messages.map((el, index) =>
+              (
+                <ListItem key={index}>
+                  <ListItemAvatar>
+                    <Avatar className={classes.avatar}>{el.sender&&el.sender[0]}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={el.content}
+                  />
+                </ListItem>
+              )
+            )
+            }
           </List>
+          <Paper className={classes.messagePaper}>
+            <Input fullWidth placeholder = "Enter your message..." id="text"/>
+          </Paper>
+
         </main>
       </div>
     );
