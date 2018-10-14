@@ -25,48 +25,46 @@ import { chats, messages } from './mock-data';
 
 const styles = theme => ({
   appFrame: {
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    height: '100%',
 
   },
   appBar: {
-    width: `100%`,
+    width: `calc(100% - 320px)`,
+    position: 'fixed',
   },
-  drawerPaper: {
-    position: 'relative',
-    width: 320,
-    height: `100%`,
-  },
+
   toolbar: theme.mixins.toolbar,
   content: {
+    height: '100%',
+    width: `calc(100% - 320px)`,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: '64px',
+    alignItems: 'center',    
+    overflow: 'hidden',
+  },
+
+  messagesList: {
+    overflowX: 'scroll',
     height: '100%',
-    overflow: 'hidden',  
+    width: '100%',
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: '120px',    
   },
   searchWrapper: {
     width: 320,
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
   },
-  textField: {
-    
-  },
 
   contactList: {
-    overflowY: 'auto',
-    minHeight: `calc(100% - 72px)`,
-    maxHeight: `calc(100% - 72px)`,
-    width: '100%',
-    paddingBottom: 60,
+    overflowY: 'scroll',
+    height: `calc(100% - 72px)`,
+    width: 320,
   },
-  messagesList: {
-    overflowY: 'auto',
-    paddingBottom: 60,
-    width: '100%',
-    minHeight: `calc(100% - 64px)`,
-    maxHeight: `calc(100% - 64px)`,
-  },
+
 
   title: {
     margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
@@ -77,13 +75,8 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     position: 'absolute',
-    bottom: `10%`,
-    right: 50,
-  },
-  bottomNavigation: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
+    bottom: 65,
+    right: 40,
   },
   messagePaper: {
     width: `calc(100% - 40px)`,
@@ -91,24 +84,15 @@ const styles = theme => ({
     right: 20,
     bottom: 30
   },
-  drawer: {
-    width: 320,
-    height: '100%',
-    position: 'relative',
-    display: 'flex',
-    flexFlow: 'column',
-    flexGrow: 1,
+  messageWrapper: {
+    width: `calc(100% - 320px)`,
+    right: 0,
+    bottom: 0,
+    position: 'fixed',
   }
+
 });
 
-
-function generate(element) {
-  return [0, 1, 2, 3, 4, 5, 6, 7].map(value =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
 
 class MyApp extends React.Component {
 
@@ -116,8 +100,74 @@ class MyApp extends React.Component {
     const { classes } = this.props;
 
     return (
+<div className={classes.appFrame}>
+  <Drawer
+      variant="permanent"
+    >
+    <div className={classes.searchWrapper}>
+      <TextField
+        id="standard-search"
+        label="Search chats..."
+        type="search"
+        fullWidth
+        className={classes.textField}
+        margin="normal"
+      />
+    </div> 
+
+      <List className={classes.contactList}>
+        {chats.map((el, index) =>
+          (
+            <ListItem key={index}>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>{el.title&&el.title[0]}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={el.title}
+              />
+            </ListItem>
+          )
+        )
+        }
+      </List>
+      <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
+        <AddIcon />
+      </Button>      
+      <BottomNavigation
+        showLabels
+      >
+        <BottomNavigationAction label="My chats" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="Explore" icon={<ExploreIcon />} />
+      </BottomNavigation>
+  
+    </Drawer>
+    <AppBar
+      className={classes.appBar}
+    >
+      <Toolbar>
+        <Typography variant="title" color="inherit" noWrap>
+          DogeCodes React Chat
+        </Typography>
+      </Toolbar>
+    </AppBar>
+    <main className={classes.content}>
+      <div className={classes.messagesList}>
+      Hello Gleb!
+      </div>
+      <div className={classes.messageWrapper}>
+        <Paper className={classes.messagePaper}>
+          <Input fullWidth placeholder = "Enter your message..." id="text"/>
+        </Paper>
+      </div>
+
+    </main>        
+    
+  </div>      
+
+    )
+    return (
       <div className={classes.appFrame}>
-        <Drawer
+      <Drawer
           variant="permanent"
           className={classes.drawer}
         >
@@ -146,9 +196,7 @@ class MyApp extends React.Component {
             )
             }
           </List>
-          <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
-            <AddIcon />
-          </Button>
+
 
           <BottomNavigation
             showLabels
@@ -160,8 +208,6 @@ class MyApp extends React.Component {
     
 
         </Drawer>
-
-
         <main className={classes.content}>
           <AppBar
             className={classes.appBar}
@@ -191,7 +237,9 @@ class MyApp extends React.Component {
             <Input fullWidth placeholder = "Enter your message..." id="text"/>
           </Paper>
 
-        </main>
+        </main>        
+
+      
       </div>
     );
   }
