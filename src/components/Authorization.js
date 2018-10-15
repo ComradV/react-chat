@@ -3,9 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
+import LoginTab from './LoginTab';
+import SignUpTab from './SignUpTab';
 
 
 import ChatHeader from './ChatHeader'
@@ -58,62 +57,13 @@ class Authorization extends React.Component {
                 <Tab label="Sign up" />
               </Tabs>
             </Paper>
-            <div className={classes.inputFieldsWrapper}>
-
-              <LoginPassword classes={classes}/>
-
-              {value === 0 && <LoginTab classes={classes}/>}
-              {value === 1 && <SignupTab classes={classes}/>}
-            </div>
+            {value === 0 && <LoginTab />}
+            {value === 1 && <SignUpTab />}
           </Paper>
         </div>
       </div>
     );
   }
 }
-
-const LoginPassword = ({classes}) => (
-  <React.Fragment>
-    <TextField
-    required
-    label="Username"
-    autoComplete="current-login"
-    className={classes.textField}
-    margin="normal"
-    fullWidth
-    />
-    <TextField
-    required
-    label="Password"
-    className={classes.textField}
-    type="password"
-    autoComplete="current-password"
-    margin="normal"
-    fullWidth
-    />
-  </React.Fragment>
-);
-
-const LoginTab = ({classes}) => (
-  <Button fullWidth variant="contained" color="primary" className={classes.button}>
-    Login
-  </Button>
-)
-
-const SignupTab = ({classes}) => (
-  <React.Fragment>
-    <TextField
-    required
-    label="Repeat password"
-    className={classes.textField}
-    type="password"
-    margin="normal"
-    fullWidth
-    />  
-    <Button fullWidth variant="contained" color="primary" className={classes.button}>
-      Signup
-    </Button>
-  </React.Fragment>
-)
 
 export default withStyles(styles)(Authorization);
