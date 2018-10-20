@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -43,9 +44,14 @@ class Authorization extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, signup, login, isAuthenticated } = this.props;
     const { value } = this.state;
 
+    if(isAuthenticated) {
+      return (
+        <Redirect to='/chat'></Redirect>
+      )
+    }
     return (
       <div className={classes.root}>
        <ChatHeader fullWidth='true'/>
@@ -57,8 +63,8 @@ class Authorization extends React.Component {
                 <Tab label="Sign up" />
               </Tabs>
             </Paper>
-            {value === 0 && <LoginTab />}
-            {value === 1 && <SignUpTab />}
+            {value === 0 && <LoginTab onSubmit={login}/>}
+            {value === 1 && <SignUpTab onSubmit={signup}/>}
           </Paper>
         </div>
       </div>

@@ -1,22 +1,23 @@
 import React from 'react';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Provider } from 'react-redux';
+import ChatPage from '../containers/ChatPage';
+import Authorization from '../containers/Authorization';
+import configureStore from '../store';
 
-import ChatPage from './ChatPage'
-import WelcomePage from './WelcomePage'
-import Authorization from './Authorization'
-
-
+const store = configureStore();
 
 const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/(welcome)?" component={WelcomePage} />
-      <Route path="/chat" component={ChatPage} />
-      <Route path="/authorization" component={Authorization} />
-      <Redirect to="/authorization" />
-    </Switch>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route exact path="/(authorization)?" component={Authorization} />
+        <Route path="/chat" component={ChatPage} />
+        <Redirect to="/" />
+      </Switch>
+    </Router>
+  </Provider>
 )
 
 export default App;

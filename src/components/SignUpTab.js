@@ -62,23 +62,8 @@ class SignUpTab extends React.Component {
       return;
     }
 
-    fetch('http://localhost:8001/v1/signup', {
-      method: 'POST',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json',
-      },
-      body: JSON.stringify({
-        username: username.value,
-        password: password.value,
-      })
-    })
-    .then(res => res.json())
-    .then(console.log)
-    .catch(err => console.error(err))
-    
+    this.props.onSubmit(username.value, password.value);
 
-    console.log(`username:${username.value}, password:${password.value}`);
   }
 
 

@@ -40,7 +40,7 @@ class LoginTab extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const {username, password} = this.state;
-    console.log(`username:${username.value}, password:${password.value}`);
+    this.props.onSubmit(username.value, password.value);
   }
 
 
