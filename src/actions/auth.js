@@ -95,15 +95,15 @@ export function logout() {
 export function recieveAuth() {
   return (dispatch, getState) => {
     const { token } = getState().auth;
+    dispatch({
+      type: types.RECIEVE_AUTH_REQUEST
+    })
     if (!token) {
       return dispatch({
         type: types.RECIEVE_AUTH_FAILURE,
         payload: {errtype: 22}
       })
     }
-    dispatch({
-      type: types.RECIEVE_AUTH_REQUEST
-    })
   return fetch('http://localhost:8001/v1/users/me', {
       headers: {
         'Accept': 'application/json',
