@@ -11,3 +11,4 @@ export const FETCH_CHAT_SUCCESS = Symbol('FETCH_CHAT_SUCCESS')
 export const FETCH_CHAT_FAILURE = Symbol('FETCH_CHAT_FAILURE')
 
 export const SET_ACTIVE_CHAT = Symbol('SET_ACTIVE_CHAT')
+export const UNSET_ACTIVE_CHAT = Symbol('UNSET_ACTIVE_CHAT')

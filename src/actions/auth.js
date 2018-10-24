@@ -1,4 +1,5 @@
-import * as types from '../constants'
+import * as types from '../constants/auth';
+import fetchApi from '../utils/fetch-api';
 
 export function signup(username, password) {
   return (dispatch) => {
@@ -6,25 +7,8 @@ export function signup(username, password) {
       type: types.SIGNUP_REQUEST
     })
 
-    return fetch('http://localhost:8001/v1/signup', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      })
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          return json;
-        }
-        throw new Error(json.message)
-      })
-      .then(json => {
+    return fetchApi('signup','' ,{ method: 'POST' }, {username, password})
+       .then(json => {
         if (!json.token) {
           throw new Error('Token has not been provided!');
         }
@@ -48,24 +32,7 @@ export function login(username, password) {
       type: types.LOGIN_REQUEST
     })
 
-    return fetch('http://localhost:8001/v1/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      })
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          return json;
-        }
-        throw new Error(json.message)
-      })
+    return fetchApi('login','' ,{ method: 'POST' }, {username, password})
       .then(json => {
         if (!json.token) {
           throw new Error('Token has not been provided!');
@@ -104,20 +71,7 @@ export function recieveAuth() {
         payload: {errtype: 22}
       })
     }
-  return fetch('http://localhost:8001/v1/users/me', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          return json;
-        }
-        throw new Error(json.message)
-      })
+  return fetchApi('users/me',token)
       .then(json => {
         dispatch({
           type: types.RECIEVE_AUTH_SUCCESS,
