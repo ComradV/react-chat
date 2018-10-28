@@ -37,7 +37,7 @@ const styles = theme => ({
   },
 });
 
-const Sidebar = ({classes, chats}) => (
+const Sidebar = ({classes, chats, createChat}) => (
   <Drawer
   variant="permanent"
   classes={{
@@ -64,6 +64,7 @@ const Sidebar = ({classes, chats}) => (
     variant="fab"
     color="primary"
     className={classes.newChatButton}
+    onClick = {createChat}
   >
     <AddIcon />
   </Button>

@@ -8,7 +8,7 @@ export function fetchMyChats(){
       type: types.FETCH_MY_CHATS_REQUEST,
     });
     const {token} = getstate().auth;
-    fetchApi('chats', token)
+    fetchApi('chats/my', token)
       .then(json => {
         dispatch({
           type: types.FETCH_MY_CHATS_SUCCESS,
@@ -31,12 +31,12 @@ export function fetchAllChats(){
     fetchApi('chats', token)
       .then(json => {
         dispatch({
-          type: types.FETCH_MY_CHATS_SUCCESS,
+          type: types.FETCH_ALL_CHATS_SUCCESS,
           payload: json,
         })        
       })
       .catch(err => dispatch({
-        type: types.FETCH_MY_CHATS_FAILURE,
+        type: types.FETCH_ALL_CHATS_FAILURE,
         payload: err,
       }));
   }
@@ -51,13 +51,13 @@ export function fetchChat(chatId){
     fetchApi(`chats/${chatId}`, token)
       .then(json => {
         dispatch({
-          type: types.FETCH_MY_CHATS_SUCCESS,
+          type: types.FETCH_CHAT_SUCCESS,
           payload: json,
         });
         return json;
       })
       .catch(err => dispatch({
-        type: types.FETCH_MY_CHATS_FAILURE,
+        type: types.FETCH_CHAT_FAILURE,
         payload: err,
       }));
 
@@ -81,11 +81,98 @@ export function setActiveChat(chatId){
       })
   }
 };
+// 5bcf8be03022630e10e61b48
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YmNmODcxYjMwMjI2MzBlMTBlNjFiNDciLCJpYXQiOjE1NDAzMjcxOTUsImV4cCI6MTU0MTE5MTE5NX0.1QHXxPIJRbD1T-ulLnuUlXkzKySrRWxMeZM1Dnaghy0
 
-// joinChat
-// leaveChat
+export function joinChat(chatId){
+  return (dispatch, getstate) => {
+    dispatch({
+      type: types.JOIN_CHAT_REQUEST,
+    })
+    const {token} = getstate().auth;
+
+    fetchApi(`chats/${chatId}/join`, token)
+      .then(json => {
+        dispatch({
+          type: types.JOIN_CHAT_SUCCESS,
+          payload: json,
+        });
+      })
+      .catch(err => dispatch({
+        type: types.JOIN_CHAT_FAILURE,
+        payload: err,
+      }));
+  }
+}
+export function leaveChat(chatId){
+  return (dispatch, getstate) => {
+    dispatch({
+      type: types.LEAVE_CHAT_REQUEST,
+    })
+    const {token} = getstate().auth;
+
+    fetchApi(`chats/${chatId}/leave`, token)
+      .then(json => {
+        dispatch({
+          type: types.LEAVE_CHAT_SUCCESS,
+          payload: json,
+        });
+    })
+      .catch(err => dispatch({
+        type: types.LEAVE_CHAT_FAILURE,
+        payload: err,
+      }));
+  }
+}
+
+export function createChat(){
+  return (dispatch, getstate) => {
+    dispatch({
+      type: types.CREATE_CHAT_REQUEST,
+    })
+    const {token} = getstate().auth;
+
+    fetchApi(`chats`, token, {method: 'POST'})
+      .then(json => {
+        dispatch({
+          type: types.CREATE_CHAT_SUCCESS,
+          payload: json,
+        });
+        dispatch(redirect(`/chat/${json.chat._id}`))
+      })
+      .catch(err => dispatch({
+        type: types.CREATE_CHAT_FAILURE,
+        payload: err,
+      }));
+  }
+}
+
+export function deleteChat(chatId){
+  return (dispatch, getstate) => {
+    dispatch({
+      type: types.DELETE_CHAT_REQUEST,
+    })
+    const {token} = getstate().auth;
+
+    fetchApi(`chats`, token, {method: 'DELETE'})
+      .then(json => {
+        dispatch({
+          type: types.DELETE_CHAT_SUCCESS,
+          payload: json,
+        });
+        dispatch(redirect('/chat'))
+      })
+      .catch(err => dispatch({
+        type: types.DELETE_CHAT_FAILURE,
+        payload: err,
+      }));
+  }
+}
+
 // createChat
 // deleteChat
+
+// 5bd611ed75d6f0108c4262d8
 
 // sendMessage
 // eidtUser
