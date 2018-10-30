@@ -15,7 +15,7 @@ const App = () => (
     <Router history = {history}>
       <Switch>
         <Route exact path="/(authorization)?" component={Authorization} />
-        <PrivateRoute path="/chat" component={ChatPage} />
+        <PrivateRoute path="/chat/:chatId?" component={ChatPage} />
         <Redirect to="/" />
       </Switch>
     </Router>

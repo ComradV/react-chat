@@ -6,13 +6,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import ExploreIcon from '@material-ui/icons/Explore';
 import RestoreIcon from '@material-ui/icons/Restore';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Divider from '@material-ui/core/Divider';
+import CreateChatButton from './CreateChatButton';
 
 const styles = theme => ({
   drawerPaper: {
@@ -28,12 +27,6 @@ const styles = theme => ({
   chatsList: {
     height: 'calc(100% - 56px)',
     overflowY: 'scroll',
-  },
-  newChatButton: {
-    position: 'absolute',
-    left: 'auto',
-    right: theme.spacing.unit * 3,
-    bottom: theme.spacing.unit * 3 + 48, // + bottom navigation
   },
 });
 
@@ -60,14 +53,7 @@ const Sidebar = ({classes, chats, createChat}) => (
       </ListItem>
     ))}
   </List>
-  <Button
-    variant="fab"
-    color="primary"
-    className={classes.newChatButton}
-    onClick = {createChat}
-  >
-    <AddIcon />
-  </Button>
+  <CreateChatButton createChat = {createChat}/>
   <BottomNavigation showLabels>
     <BottomNavigationAction label="My Chats" icon={<RestoreIcon />} />
     <BottomNavigationAction label="Explore" icon={<ExploreIcon />} />

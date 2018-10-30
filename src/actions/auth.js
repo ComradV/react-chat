@@ -7,8 +7,8 @@ export function signup(username, password) {
       type: types.SIGNUP_REQUEST
     })
 
-    return fetchApi('signup','' ,{ method: 'POST' }, {username, password})
-       .then(json => {
+    return fetchApi('signup', '', { method: 'POST' }, { username, password })
+      .then(json => {
         if (!json.token) {
           throw new Error('Token has not been provided!');
         }
@@ -32,7 +32,7 @@ export function login(username, password) {
       type: types.LOGIN_REQUEST
     })
 
-    return fetchApi('login','' ,{ method: 'POST' }, {username, password})
+    return fetchApi('login', '', { method: 'POST' }, { username, password })
       .then(json => {
         if (!json.token) {
           throw new Error('Token has not been provided!');
@@ -68,10 +68,10 @@ export function recieveAuth() {
     if (!token) {
       return dispatch({
         type: types.RECIEVE_AUTH_FAILURE,
-        payload: {errtype: 22}
+        payload: { errtype: 22 }
       })
     }
-  return fetchApi('users/me',token)
+    return fetchApi('users/me', token)
       .then(json => {
         dispatch({
           type: types.RECIEVE_AUTH_SUCCESS,

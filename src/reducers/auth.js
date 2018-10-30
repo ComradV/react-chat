@@ -14,14 +14,14 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.username,
+        user: action.payload.user,
         token: action.payload.token,
       };
     case types.RECIEVE_AUTH_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.username,
+        user: action.payload.user,
       }
     case types.SIGNUP_FAILURE:
     case types.LOGIN_FAILURE:
@@ -37,3 +37,5 @@ export default function auth(state = initialState, action) {
       return state;
   }
 }
+
+export const getUserId = (state) => state.user?state.user._id:'';

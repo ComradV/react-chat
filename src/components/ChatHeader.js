@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import classNames from 'classnames';
+import ChatMenu from './ChatMenu';
 
 const styles = theme => ({
   appBar: {
@@ -16,20 +17,21 @@ const styles = theme => ({
   }
 });
 
-const ChatHeader = ({classes, fullWidth}) => (
+const ChatHeader = ( { classes, fullWidth, myChat = false } ) => (
   <AppBar color="primary" className={
     classNames(
-      fullWidth==='true'&&classes.appBarFullWidth,
-      fullWidth==='false'&&classes.appBar
+      fullWidth === 'true' && classes.appBarFullWidth,
+      fullWidth === 'false' && classes.appBar
     )}
   >
     <Toolbar>
       <Typography variant="title" color="inherit" noWrap>
         DogeCodes React Chat
-      </Typography>
+    </Typography>
+    <ChatMenu myChat={myChat}/>
     </Toolbar>
   </AppBar>
-
 )
+
 
 export default withStyles(styles)(ChatHeader)

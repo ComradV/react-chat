@@ -125,20 +125,24 @@ export function leaveChat(chatId){
   }
 }
 
-export function createChat(){
+export function createChat(chatName){
   return (dispatch, getstate) => {
     dispatch({
       type: types.CREATE_CHAT_REQUEST,
+      data: {title: chatName},
     })
     const {token} = getstate().auth;
 
-    fetchApi(`chats`, token, {method: 'POST'})
+    fetchApi(`chats`, token, {method: 'POST'},
+      {data: {title: chatName}}
+    )
       .then(json => {
         dispatch({
           type: types.CREATE_CHAT_SUCCESS,
           payload: json,
         });
-        dispatch(redirect(`/chat/${json.chat._id}`))
+        dispatch(redirect(`/chat/${json.chat._id}`));
+        return json.chat;
       })
       .catch(err => dispatch({
         type: types.CREATE_CHAT_FAILURE,
