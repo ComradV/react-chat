@@ -158,7 +158,7 @@ export function deleteChat(chatId){
     })
     const {token} = getstate().auth;
 
-    fetchApi(`chats`, token, {method: 'DELETE'})
+    fetchApi(`chats${chatId}`, token, {method: 'DELETE'})
       .then(json => {
         dispatch({
           type: types.DELETE_CHAT_SUCCESS,

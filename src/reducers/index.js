@@ -6,3 +6,9 @@ export default combineReducers({
   auth,
   chats
 })
+
+export const isCreator = (state, chat) => (
+  state.auth.user._id === chat.creator._id
+)
+export const isMember = () => false;
+export const isChatMember = () => false;

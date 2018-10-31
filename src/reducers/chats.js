@@ -93,6 +93,7 @@ export const getByIds = (state, ids) => {
 
   return ids.map(id => state.byIds[id])
 };
+export const getById = (state, id) => state[id];
 export const getCurrentChatCreatorId = (state) => {
   return state.activeId?
     state.byIds[state.activeId].creator._id:

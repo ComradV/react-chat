@@ -17,19 +17,24 @@ const styles = theme => ({
   }
 });
 
-const ChatHeader = ( { classes, fullWidth, myChat = false } ) => (
+const ChatHeader = ({ classes, fullWidth, activeChat, leaveChat, deleteChat }) => (
   <AppBar color="primary" className={
     classNames(
       fullWidth === 'true' && classes.appBarFullWidth,
       fullWidth === 'false' && classes.appBar
     )}
   >
-    <Toolbar>
-      <Typography variant="title" color="inherit" noWrap>
+    {active ?
+      <Toolbar>
+        <Typography variant="title" color="inherit" noWrap>
+          {activeChat.title}
+        </Typography>
+        <ChatMenu  />
+      </Toolbar>
+      : <Typography variant="title" color="inherit" noWrap>
         DogeCodes React Chat
-    </Typography>
-    <ChatMenu myChat={myChat}/>
-    </Toolbar>
+      </Typography>
+    }
   </AppBar>
 )
 
