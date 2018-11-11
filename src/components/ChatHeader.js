@@ -24,7 +24,7 @@ const ChatHeader = ({ classes, fullWidth, activeChat, leaveChat, deleteChat }) =
       fullWidth === 'false' && classes.appBar
     )}
   >
-    {active ?
+    {activeChat ?
       <Toolbar>
         <Typography variant="title" color="inherit" noWrap>
           {activeChat.title}

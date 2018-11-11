@@ -48,14 +48,27 @@ export function login(username, password) {
         type: types.LOGIN_FAILURE,
         payload: err,
       }));
+    }
   }
-}
-
-export function logout() {
-  return (dispatch) => {
-    dispatch({
-      type: types.LOGOUT_REQUEST
-    })
+  
+  export function logout() {
+    return (dispatch) => {
+      dispatch({
+        type: types.LOGOUT_REQUEST
+      })
+      return fetchApi('logout')
+        .then(json => {
+          localStorage.removeItem('token');
+    
+          dispatch({
+            type: types.LOGOUT_SUCCESS,
+            payload: json,
+          })
+        })
+        .catch(err => dispatch({
+          type: types.LOGOUT_FAILURE,
+          payload: err,
+        }));
   }
 }
 

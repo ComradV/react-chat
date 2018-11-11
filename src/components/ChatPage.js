@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 import ChatHeader from './ChatHeader'
 import Chat from './Chat'
 
-import { messages } from '../mock-data';
+// import { messages } from '../mock-data';
 
 const styles = theme => ({
   root: {
@@ -26,13 +26,13 @@ class ChatPage extends React.Component {
     ])
   }
   render() {
-    const { chats, classes, createChat, leaveChat, deleteChat } = this.props;
+    const { chats, classes, createChat, leaveChat, deleteChat, setActiveChat } = this.props;
 
     return (
       <div className={classes.root}>
-        <Sidebar chats={chats} createChat={createChat} />
+        <Sidebar chats={chats} createChat={createChat} setActiveChat={setActiveChat} />
         <ChatHeader fullWidth='false' activeChat = {chats.active} leaveChat={leaveChat} deleteChat={deleteChat} />
-        <Chat messages={messages} />
+        <Chat messages={chats.active && chats.active.messages || []} />
       </div>
     )
   }
